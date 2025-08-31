@@ -83,3 +83,16 @@ ________________________________________________
       StateMachine.cs
       CooldownTimer.cs
 ________________________________________________
+/Assets
+  /Scenes
+    /Levels
+      Level01.unity
+      Level02.unity
+  /Prefabs
+    /Environment
+      Trees.prefab
+      Rocks.prefab
+  /Terrain
+    /Brushes
+    /Textures
+    /Heightmaps
