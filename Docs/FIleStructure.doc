@@ -1,0 +1,85 @@
+/Assets
+  /Characters
+    /Player
+      /Models
+        Player_Base.fbx
+        Player_WithRig.fbx
+        Player_CustomOutfit.fbx
+      /Textures
+        Body_Diffuse.png
+        Outfit_Albedo.png
+      /Materials
+        PlayerBody.mat
+        Outfit.mat
+      /Animations
+        /Locomotion
+          Idle.fbx
+          Walk.fbx
+          Run.fbx
+          Jump.fbx
+        /Combat
+          Slash_01.fbx
+          Slash_Combo_02.fbx
+          Block.fbx
+        /Emotes
+          Cheer.fbx
+          Dance.fbx
+      /Prefabs
+        Player.prefab
+        Player_WithWeapon.prefab
+      /Animator
+        PlayerAnimatorController.controller
+        PlayerAnimatorOverrides.overrideController
+
+________________________________________________
+/Assets
+  /Animations
+    /Mixamo
+      /Locomotion
+      /Combat
+      /Emotes
+________________________________________________
+/Characters
+  /Shared
+    /Animations
+    /Weapons
+    /Animator
+  /Player_V1 (realistic model)
+  /Player_V2 (VRoid model)
+  /Player_Toon (cartoon model)
+  ________________________________________________
+  /Assets           ← This is your main project root (everything you work on goes here)
+  /Characters     ← You create this folder
+    /Player       ← You organize your player here (models, animations, prefabs, etc.)
+  /Scenes
+  /Scripts
+  /Animations
+  /UI
+  /Audio
+  ________________________________________________
+  /Assets
+  /Scripts
+    /Systems
+      GameManager.cs
+      InputManager.cs
+      AudioManager.cs
+      SaveManager.cs
+      SceneLoader.cs
+/Assets
+  /Scenes
+  /Scripts
+    /Player
+      PlayerInput.cs
+      PlayerMovement.cs
+    /Enemies
+      EnemyAI.cs
+    /Systems
+      GameManager.cs
+      InputManager.cs
+      AudioManager.cs
+    /UI
+      HUDController.cs
+    /Utilities
+      StateMachine.cs
+      CooldownTimer.cs
+________________________________________________
