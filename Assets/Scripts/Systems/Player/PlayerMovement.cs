@@ -11,10 +11,8 @@ public class PlayerMovement : MonoBehaviour
 
     private void Start()
     {
-        // Cache the main camera reference
         mainCamera = Camera.main;
     }
-
 
     private void Awake()
     {
@@ -27,24 +25,31 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
-        // Convert the Vector2 input into a Vector3 for movement
-        Vector3 movement = new Vector3(movementInput.x, 0f, movementInput.y);
+        Vector3 inputDirection = new Vector3(movementInput.x, 0f, movementInput.y);
 
-        if (movement.magnitude > 0.1f) // Only process movement if input is significant
+        if (inputDirection.magnitude > 0.1f)
         {
-            transform.position += movement * speed * Time.deltaTime;
-
-            if (!isStrafing)
+            if (isStrafing)
             {
-                // Rotate only if not strafing
-                Quaternion targetRotation = Quaternion.LookRotation(movement, Vector3.up);
+                // Move relative to facing direction, no rotation
+                Vector3 moveDirection = (transform.forward * movementInput.y) + (transform.right * movementInput.x);
+                moveDirection.Normalize();
+                transform.position += moveDirection * speed * Time.deltaTime;
+                // No rotation while strafing
+            }
+            else
+            {
+                // Rotate player to face input direction (world space)
+                Vector3 moveDirection = inputDirection.normalized;
+                transform.position += moveDirection * speed * Time.deltaTime;
+
+                Quaternion targetRotation = Quaternion.LookRotation(moveDirection, Vector3.up);
                 transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 10f);
             }
         }
 
-        // Update animator
-        UpdateAnimationStates(movement);
-
+        // Update animator with current movement state
+        UpdateAnimationStates(inputDirection);
     }
 
     private void UpdateAnimationStates(Vector3 movement)
@@ -53,58 +58,33 @@ public class PlayerMovement : MonoBehaviour
 
         float speedMagnitude = movement.magnitude;
 
-        // Reset all directional booleans
         bool strafeLeft = false;
         bool strafeRight = false;
         bool walkBackwards = false;
 
-        // Determine specific strafe direction
         if (isStrafing)
         {
-            if (movementInput.x < -0.1f) // A key
+            if (movementInput.x < -0.1f)
                 strafeLeft = true;
-            else if (movementInput.x > 0.1f) // D key
+            else if (movementInput.x > 0.1f)
                 strafeRight = true;
-            else if (movementInput.y < -0.1f) // S key
+            else if (movementInput.y < -0.1f)
                 walkBackwards = true;
         }
 
-        // Set animator params
         animator.SetFloat("Speed", speedMagnitude);
         animator.SetBool("StrafeLeft", strafeLeft);
         animator.SetBool("StrafeRight", strafeRight);
         animator.SetBool("WalkBackwards", walkBackwards);
     }
 
-
-    // This method is called by the Input System when the Move action is triggered
     public void OnMove(InputValue value)
     {
-        // Debug.Log("On Move");
         movementInput = value.Get<Vector2>();
-
     }
 
-    // This method is called by the Input System when the Right Mouse Button is pressed or released
     public void OnRightClick(InputValue value)
     {
-
-       isStrafing = value.isPressed;
-
+        isStrafing = value.isPressed;
     }
-    // public void OnRightClick(InputAction.CallbackContext context)
-    // {
-    //         Debug.Log("is this even being called");
-
-    //     if (context.started)
-    //     {
-    //         isStrafing = true; // Start strafing
-    //     }
-    //     else if (context.canceled)
-    //     {
-    //         isStrafing = false; // Stop strafing
-    //     }
-    //         Debug.Log("Right click held: " + isStrafing);
-    // }
 }
-

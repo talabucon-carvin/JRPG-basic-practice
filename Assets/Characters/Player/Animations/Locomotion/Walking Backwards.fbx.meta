@@ -24,7 +24,7 @@ ModelImporter:
     importConstraints: 0
     animationCompression: 1
     animationRotationError: 0.5
-    animationPositionError: 500
+    animationPositionError: 2000
     animationScaleError: 0.5
     animationWrapMode: 0
     extraExposedTransformPaths: []
