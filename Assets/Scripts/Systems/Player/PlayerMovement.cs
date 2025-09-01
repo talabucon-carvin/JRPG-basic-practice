@@ -5,6 +5,16 @@ public class PlayerMovement : MonoBehaviour
 {
     public float speed = 5f; // Movement speed
     private Vector2 movementInput; // Stores input from the New Input System
+    private Animator animator;
+
+    private void Awake()
+    {
+        animator = GetComponentInChildren<Animator>();
+        if (animator == null)
+        {
+            Debug.LogError("Animator component not found in children!");
+        }
+    }
 
     private void Update()
     {
@@ -13,6 +23,8 @@ public class PlayerMovement : MonoBehaviour
 
         // Move the character by modifying its position
         transform.position += movement * speed * Time.deltaTime;
+        animator.SetFloat("Speed", movementInput.magnitude);
+
     }
 
     // This method is called by the Input System when the Move action is triggered
@@ -20,5 +32,5 @@ public class PlayerMovement : MonoBehaviour
     {
         movementInput = value.Get<Vector2>();
     }
-
 }
+
